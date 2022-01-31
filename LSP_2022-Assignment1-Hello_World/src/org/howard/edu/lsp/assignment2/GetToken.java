@@ -1,41 +1,42 @@
 package org.howard.edu.lsp.assignment2;
 
-import java.util.Scanner;
+import org.howard.edu.lsp.assignment2.ComputeTokens;
+
+/**
+ * This is a class that takes in tokens from the user, 
+ * and invokes computeTokens() to print them out along 
+ * with their sum and product. After completing the func
+ * for one set of tokens, this asks the user if they
+ * would like to end the program
+ * 
+ * @author Ronte' Parker
+ */
 
 public class GetToken {
 
 	public static void main(String[] args) {
 		
+		String end = "";
 		System.out.println("Enter your tokens (integers):");
+		String[] tokens = ComputeTokens.scanner.nextLine().split(" ");
 		
-		Scanner scanner = new Scanner(System.in);
-		String[] tokens = scanner.nextLine().split(" ");
-		
-		int tokensSum = 0;
-		int tokensProduct = 1;
-		
-		System.out.println();
-		for(int i = 0; i < tokens.length; i++) {
-			if (i == 0) {
-				System.out.println("\nTokens:");
+		while (!end.equalsIgnoreCase("goodbye")) {
+			
+			if (end != "") {
+				System.out.println("Enter your tokens (integers):");
+				tokens = ComputeTokens.scanner.nextLine().split(" ");
 			}
 			
-			try {
-				tokensSum += Integer.parseInt(tokens[i]);
-				tokensProduct *= Integer.parseInt(tokens[i]);
-				
-				System.out.println(tokens[i]);
-				
-			} catch(NumberFormatException err) {
-				System.out.println("You entered an invalid number. Please input an integer: ");
-				tokens[i] = scanner.next();
-				i--;
-			}
+			ComputeTokens.compute(tokens);
+			
+			System.out.println();
+			System.out.println("Type \"goodbye\" if you would like to end this program, or \"continue\" to continue.");
+			end = ComputeTokens.scanner.nextLine().trim().toLowerCase();
 		}
 		
-		System.out.println("Sum: " + tokensSum + "\nProduct: " + tokensProduct);
 		
-		scanner.close();
+		System.out.println("Thank you for using my program!");
+		ComputeTokens.scanner.close();
 	}
 
 }
