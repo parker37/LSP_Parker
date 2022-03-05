@@ -42,9 +42,13 @@ public class IntegerSet {
 	* @return returns true if they equal each other
 	*/
 	public boolean equals(IntegerSet b) {
+		// returns false if sets are of unequal sizes
 		if (set.size() != b.set.size()) return false;
+		// returns true if first set is 0, since they are equal
 		if (set.size() == 0) return true;
-	
+		
+		// loops through the first set and checks if each integer
+		// are equal since this class sorts the sets
 		for(int i = 0; i < set.size(); i++) {
 			if(set.get(i) != b.set.get(i)) {
 				return false;
@@ -73,7 +77,7 @@ public class IntegerSet {
 		try {
 			return set.get(set.size() - 1);
 		} catch(Error e) {
-			throw new IntegerSetException("This Integer Set is empty");
+			throw new IntegerSetException();
 		}
 		
 	}; 
@@ -87,7 +91,7 @@ public class IntegerSet {
 		try {
 			return set.get(0);
 		} catch(Error e) {
-			throw new IntegerSetException("This Integer Set is empty");
+			throw new IntegerSetException();
 		}
 	};
 
@@ -98,23 +102,28 @@ public class IntegerSet {
 	 */
  	public void add(int item) {
  		if (!set.contains(item)) {
+ 			// adds item to the set or does nothing if it is in set
  			set.add(item);
+ 			
+ 			// sorts the set
 	 		Collections.sort(set);
  		}
- 	}; // adds item to the set or does nothing if it is in set
-
+ 	}; 
 	/**
 	 *  Removes an item from the set or does nothing if not there
 	 * @param item: integer to be removed
 	 * @throws Throws a IntegerSetException of the set is empty
 	 */
 	public void remove(int item) throws IntegerSetException {
-		if (set.contains(item)) {
-			try {
+		try {
+			if (set.contains(item)) {
+				// attempts to remove the integer, if not present
+				// nothing happens
 				set.remove(set.indexOf(item));
-			} catch(Error e) {
-				throw new IntegerSetException("This Integer Set is empty");
 			}
+		} catch (Error e) {
+			// an error is thrown if set is empty
+			throw new IntegerSetException();
 		}
 		
 	};
@@ -125,13 +134,11 @@ public class IntegerSet {
 	 * @param intSetb: 2nd set to perform this method on
 	 */
 	public void union(IntegerSet intSetb) {
-		ArrayList<Integer> newSet = new ArrayList<Integer>();
-		
 		for(int b : intSetb.set) {
+			// loops through the second set and adds unique integers
+			// to the set
 			this.add(b);
 		}
-		
-		set = newSet;
 	}
 	
 	/**
@@ -140,13 +147,20 @@ public class IntegerSet {
 	 * @param intSetb: 2nd set to perform this method on
 	 */
 	public void intersect(IntegerSet intSetb) {
+		ArrayList<Integer> newSet = new ArrayList<Integer>();
+		
 		for(int i = 0; i < intSetb.set.size(); i++) {
+			// loops through the elements of the second set
 			if (set.contains(intSetb.set.get(i))) {
-				set.remove(intSetb.set.get(i));
+				// if they are present in the first set add them
+				// to the temp new set
+				newSet.add(intSetb.set.get(i));
 			}
 		}
 		
-		set.addAll(intSetb.set);
+		// assign the values of the new set to be the current set
+		set.clear();
+		set.addAll(newSet);
 	}; 
 	
 	/**
@@ -157,32 +171,48 @@ public class IntegerSet {
 	public void diff(IntegerSet intSetb) {
 		// set difference, i.e. s1 - s2
 		for(int i = 0; i < intSetb.set.size(); i++) {
+			// Loops through the integers in the second set
 			if (set.contains(intSetb.set.get(i))) {
+				// removes the integer from the first set if it's
+				// found in there
 				set.remove(intSetb.set.get(i));
 			}
 		}
 	}
 	
-	// Returns true if the set is empty, false otherwise
+	/**
+	 *  Checks if the set is empty
+	 * @return Returns true if the set is empty, false otherwise
+	 */
 	public boolean isEmpty() {
 		return set.isEmpty();
 	}
 	
-	// Return String representation of your set
+	/**
+	 * @return Returns String representation of the set
+	 */
 	public String toString() {
 		return set.toString();
 	};	// return String representation of your set
 	
-	
+	/**
+	 * IntegerSetException
+	 * 
+	 * This catches exceptions in this class that are thrown due
+	 * to an empty set.
+	 * @author Ronte' Parker
+	 */
 	public class IntegerSetException extends Throwable {
 	    /**
 		 * Random Generated Serial Id Added
 		 */
 		private static final long serialVersionUID = -4796566397329504307L;
-		String str1;
-	    
-	    IntegerSetException(String str2) {
-	    	str1 = str2;
+		/**
+		 * Error Message
+		 */
+		String str1 = "This Integer Set is empty";
+		
+	    IntegerSetException() {
 	    }
 	    
 	    public String toString(){ 
