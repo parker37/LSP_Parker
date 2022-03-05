@@ -154,6 +154,12 @@ public class Driver {
 		"I made Difference1 to be similar to arithmetic difference where it removes all \nelements in SetB from SetA. "
 		+ "I made Difference2 to be where it takes the elements \nthat are not present in both sets and makes a new "
 		+ "with those elements.");
+		System.out.println("\n");
+		
+		System.out.println("........................................");
+		System.out.println("Please scroll to the top of this output!");
+		System.out.println("........................................");
+		
 	}
 
 }
