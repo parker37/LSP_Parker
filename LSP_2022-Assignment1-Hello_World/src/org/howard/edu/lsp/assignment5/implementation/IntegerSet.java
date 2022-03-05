@@ -29,7 +29,7 @@ public class IntegerSet {
 	};
 	
 	/**
-	 * Length Method return the size of the integer set
+	 * Length Method returns the size of the integer set
 	 * @return Returns the length of the set
 	 */
 	public int length() {
@@ -38,10 +38,10 @@ public class IntegerSet {
 	
 	
 	/** 
-	 * Checks if the 2 sets are equal
+	 * Checks if the 2 sets are equal.
 	* Two sets are equal if they contain all of the same values in ANY order.
-	* @param b: takes in an IntegerSet object
-	* @return returns true if they equal each other
+	* @param b: Takes in an IntegerSet object
+	* @return Returns true if they equal each other
 	*/
 	public boolean equals(IntegerSet b) {
 		// returns false if sets are of unequal sizes
@@ -61,9 +61,9 @@ public class IntegerSet {
 	
 	
 	/**
-	 *  Checks if the set contains the value
-	 * @param value: integer to check
-	 * @return returns true or false whether the set contains that value
+	 *  Checks if the set contains the provided value
+	 * @param value: Integer to check
+	 * @return Returns true or false whether the set contains that value
 	 */
 	public boolean contains(int value) {
 		return set.contains(value);
@@ -72,8 +72,8 @@ public class IntegerSet {
 	
 	/**
 	 *  Gets the largest integer in the set
-	 * @return Returns the largest item in the set
-	 * @throws IntegerSetException is thrown if the set is empty 
+	 * @return Returns the largest value in the set
+	 * @throws IntegerSetException Is thrown if the set is empty 
 	 */
 	public int largest() throws IntegerSetException {
 		if (set.isEmpty()) {
@@ -86,8 +86,8 @@ public class IntegerSet {
 	
 	/**
 	 *  Gets the smallest integer in the set
-	 * @return Returns the smallest item in the set
-	 * @throws IntegerSetException is thrown if the set is empty 
+	 * @return Returns the smallest value in the set
+	 * @throws IntegerSetException Is thrown if the set is empty 
 	 */
 	public int smallest() throws IntegerSetException {
 		if (set.isEmpty()) {
@@ -102,7 +102,7 @@ public class IntegerSet {
 
 	/**
 	 *  Adds an item to the set or does nothing it already there	
-	 * @param item: integer to be added to the set
+	 * @param item: Integer to be added to the set
 	 */
  	public void add(int item) {
  		if (!set.contains(item)) {
@@ -115,8 +115,8 @@ public class IntegerSet {
  	}; 
 	/**
 	 *  Removes an item from the set or does nothing if not there
-	 * @param item: integer to be removed
-	 * @throws IntegerSetException is thrown of the set is empty
+	 * @param item: Integer to be removed
+	 * @throws IntegerSetException Is thrown of the set is empty
 	 */
 	public void remove(int item) throws IntegerSetException {
 		if (set.isEmpty()) {
@@ -133,7 +133,7 @@ public class IntegerSet {
 	/**
 	 *  Set union: Assigns the value of all the integers in both
 	 *  sets to the first set
-	 * @param intSetb: 2nd set to perform this method on
+	 * @param intSetb: 2nd set to perform this method with
 	 */
 	public void union(IntegerSet intSetb) {
 		for(int b : intSetb.set) {
@@ -146,7 +146,7 @@ public class IntegerSet {
 	/**
 	 *  Set intersect: Assigns the value of the integers in both
 	 *  sets to the first set
-	 * @param intSetb: 2nd set to perform this method on
+	 * @param intSetb: 2nd set to perform this method with
 	 */
 	public void intersect(IntegerSet intSetb) {
 		ArrayList<Integer> newSet = new ArrayList<Integer>();
@@ -166,11 +166,12 @@ public class IntegerSet {
 	}; 
 	
 	/**
-	 *  Set Difference: Removes integers present in the 2nd set
-	 *  from the first set
-	 * @param intSetb: 2nd set to perform this method on
+	 *  Set Difference1: Removes integers present in the 2nd set
+	 *  from the first set (Subtraction/Arithmetic). 
+	 *  Ex: A - B or A ⋂ !B = setA.diff1(setB)
+	 * @param intSetb: 2nd set to perform this method with
 	 */
-	public void diff(IntegerSet intSetb) {
+	public void diff1(IntegerSet intSetb) {
 		// set difference, i.e. s1 - s2
 		for(int i = 0; i < intSetb.set.size(); i++) {
 			// Loops through the integers in the second set
@@ -183,6 +184,28 @@ public class IntegerSet {
 	}
 	
 	/**
+	 *  Set Difference2: Removes integers present in the both sets
+	 *  from the first set and adds the remaining integers to the
+	 *  first set. Ex: !(A ⋂ B) = setA.diff2(setB)
+	 * @param intSetb: 2nd set to perform this method with
+	 */
+	public void diff2(IntegerSet intSetb) {
+		// set difference, i.e. s1 - s2
+		for(int i = 0; i < intSetb.set.size(); i++) {
+			// Loops through the integers in the second set
+			if (set.contains(intSetb.set.get(i))) {
+				// removes the integer from both sets if it's
+				// found in there
+				set.remove(intSetb.set.get(i));
+				intSetb.set.remove(intSetb.set.get(i));
+				i--;
+			}
+		}
+		
+		set.addAll(intSetb.set); //adds remaining elements to the set
+	}
+	
+	/**
 	 *  Checks if the set is empty
 	 * @return Returns true if the set is empty, false otherwise
 	 */
@@ -191,14 +214,13 @@ public class IntegerSet {
 	}
 	
 	/**
-	 * @return Returns String representation of the set
+	 * @return Returns a string representation of the set
 	 */
 	public String toString() {
 		return set.toString();
 	};	// return String representation of your set
 	
-	/**
-	 * IntegerSetException
+	/** IntegerSetException:
 	 * 
 	 * This catches exceptions in this class that are thrown due
 	 * to an empty set.
