@@ -15,7 +15,9 @@ public class IntegerSet {
 	 */
 	private ArrayList<Integer> set = new ArrayList<Integer>();
 
-	// Default Constructor
+	/**
+	 *  Default Constructor
+	 */
 	public IntegerSet() {
 	}
 
@@ -38,7 +40,7 @@ public class IntegerSet {
 	/** 
 	 * Checks if the 2 sets are equal
 	* Two sets are equal if they contain all of the same values in ANY order.
-	* @paramA takes in an IntegerSet object
+	* @param b: takes in an IntegerSet object
 	* @return returns true if they equal each other
 	*/
 	public boolean equals(IntegerSet b) {
@@ -71,28 +73,30 @@ public class IntegerSet {
 	/**
 	 *  Gets the largest integer in the set
 	 * @return Returns the largest item in the set
-	 * @throws Throws a IntegerSetException if the set is empty 
+	 * @throws IntegerSetException is thrown if the set is empty 
 	 */
 	public int largest() throws IntegerSetException {
-		try {
-			return set.get(set.size() - 1);
-		} catch(Error e) {
-			throw new IntegerSetException();
+		if (set.isEmpty()) {
+			//throws an error is thrown if set is empty
+			throw new IntegerSetException("\nCannot get an element from an empty set");
 		}
-		
-	}; 
+
+		return set.get(set.size() - 1);
+	};
 	
 	/**
 	 *  Gets the smallest integer in the set
 	 * @return Returns the smallest item in the set
-	 * @throws Throws a IntegerSetException if the set is empty 
+	 * @throws IntegerSetException is thrown if the set is empty 
 	 */
 	public int smallest() throws IntegerSetException {
-		try {
-			return set.get(0);
-		} catch(Error e) {
-			throw new IntegerSetException();
+		if (set.isEmpty()) {
+			//throws an error is thrown if set is empty
+			throw new IntegerSetException("\nCannot get an element from an empty set");
 		}
+		
+		return set.get(0);
+		
 	};
 
 
@@ -112,20 +116,18 @@ public class IntegerSet {
 	/**
 	 *  Removes an item from the set or does nothing if not there
 	 * @param item: integer to be removed
-	 * @throws Throws a IntegerSetException of the set is empty
+	 * @throws IntegerSetException is thrown of the set is empty
 	 */
 	public void remove(int item) throws IntegerSetException {
-		try {
-			if (set.contains(item)) {
-				// attempts to remove the integer, if not present
-				// nothing happens
-				set.remove(set.indexOf(item));
-			}
-		} catch (Error e) {
-			// an error is thrown if set is empty
-			throw new IntegerSetException();
+		if (set.isEmpty()) {
+			//throws an error is thrown if set is empty
+			throw new IntegerSetException("\nCannot remove an element from an already empty set");
 		}
-		
+		if (set.contains(item)) {
+			// attempts to remove the integer, if not present
+			// nothing happens
+			set.remove(set.indexOf(item));
+		}
 	};
 	
 	/**
@@ -202,21 +204,18 @@ public class IntegerSet {
 	 * to an empty set.
 	 * @author Ronte' Parker
 	 */
-	public class IntegerSetException extends Throwable {
-	    /**
-		 * Random Generated Serial Id Added
-		 */
-		private static final long serialVersionUID = -4796566397329504307L;
+	public class IntegerSetException extends Exception {
 		/**
-		 * Error Message
+		 * Random Static Generated Serial
 		 */
-		String str1 = "This Integer Set is empty";
-		
-	    IntegerSetException() {
+		private static final long serialVersionUID = -719175053645894022L;
+
+		/**
+		 * Constructor function for IntegerSetException
+		 * @param s: String that tells what went wrong
+		 */
+	    IntegerSetException(String s) {
+	    	super(s);
 	    }
-	    
-	    public String toString(){ 
-	    	return ("IntegerSetException Occurred: "+str1) ;
-	       }
 	}
 }
