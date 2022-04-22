@@ -32,9 +32,9 @@ class MapUtilitiesTest {
 	}
 	
 	@Test
-	@DisplayName("MapUtilies.NullMaps test case")
+	@DisplayName("MapUtilies.AllNullMaps test case")
 	public void testNullMaps() {
-		System.out.println("Testing MapUtilies.NullMaps test case...");
+		System.out.println("Testing MapUtilies.NullMaps test case...\nInput:");
 		
 		HashMap<String,String> mapA = null;
 		HashMap<String,String> mapB = null;
@@ -45,31 +45,67 @@ class MapUtilitiesTest {
 			MapUtilities.commonKeyValuePairs(mapA, mapB);
 			assertFalse(true);
 		} catch (NullMapException e) {
-			assertTrue(e != null);
+			assertTrue(true);
+			System.out.println(e);
 		}
 		assertTrue(mapA == null);
 		assertTrue(mapB == null);
-		System.out.println();
-		
-		mapB = new HashMap<String,String>();
+		System.out.println();	
+	}
+	
+	@Test
+	@DisplayName("MapUtilies.OneNullMap test case")
+	public void testOneNullMap() {
+		System.out.println("Testing MapUtilies.OneNullMap test case...\nInput:");
+		HashMap<String,String> mapA = null;
+		HashMap<String,String> mapB = new HashMap<String,String>();
 		mapB.put("Game", "Minecraft");
+		
+		System.out.println("MapA: " + mapA);
+		System.out.println("MapB: " + mapB);
 		
 		try {
 			MapUtilities.commonKeyValuePairs(mapA, mapB);
 			assertFalse(true);
 		} catch (NullMapException e) {
-			assertTrue(e != null);
+			assertTrue(true);
+			System.out.println(e);
 		}
 		
-		mapA = new HashMap<String,String>();
+		System.out.println("Switching Input Maps and Retesting...");
+		// Switched parameter to test for null map in first and second input params
+		try {
+			MapUtilities.commonKeyValuePairs(mapB, mapA);
+			assertFalse(true);
+		} catch (NullMapException e) {
+			assertTrue(true);
+			System.out.println(e);
+		}
+		System.out.println();
+	}
+	
+	@Test
+	@DisplayName("MapUtilies.NoNullMap test case")
+	public void testNoNullMap() {
+		System.out.println("Testing MapUtilies.NoNullMap test case...\nInput:");
+		
+		HashMap<String,String> mapA = new HashMap<String,String>();
+		HashMap<String,String> mapB = new HashMap<String,String>();
 		mapA.put("Test", "PopQuiz");
+		mapB.put("Game", "Minecraft");
+		
+		System.out.println("MapA: " + mapA);
+		System.out.println("MapB: " + mapB);
 		
 		try {
 			MapUtilities.commonKeyValuePairs(mapA, mapB);
 			assertTrue(true);
 		} catch (NullMapException e) {
-			assertFalse(e != null);
+			assertFalse(true);
+			System.out.println(e);
 		}
+		
+		System.out.println();
 	}
 	
 	@Test
